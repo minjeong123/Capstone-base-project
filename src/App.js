@@ -46,7 +46,9 @@ export default () => {
       .collection("jobs")
       .orderBy("postedOn", "desc")
       .where("location", "==", jobSearch.location)
-      .where("type", "==", jobSearch.type)
+      .where("reward", "==", jobSearch.reward)
+      .where("skills", "array-contains", jobSearch.skills)
+      .where("sex", "==", jobSearch.sex)
       .get();
     const tempJobs = req.docs.map((job) => ({
       ...job.data(),
@@ -79,7 +81,7 @@ export default () => {
       />
       <ViewJobModal job={viewJob} closeModal={() => setViewJob({})} />
       <Box mb={3}>
-        <Grid container justify="center">
+        <Grid container spacing={3} justify="center">
           <Grid item xs={10}>
             <SearchBar fetchJobsCustom={fetchJobsCustom} />
 
@@ -88,7 +90,7 @@ export default () => {
                 <CircularProgress />
               </Box>
             ) : (
-              <>
+              <Grid>
                 {customSearch && (
                   <Box display="flex" justifyContent="flex-end">
                     <Button onClick={fetchJobs}>
@@ -97,10 +99,20 @@ export default () => {
                     </Button>
                   </Box>
                 )}
-                {jobs.map((job) => (
-                  <JobCard open={() => setViewJob(job)} key={job.id} {...job} />
-                ))}
-              </>
+                <Grid container>
+                  {jobs.map((job) => (
+                    <Grid item xs={4}>
+                      <Box display="flex" justifyContent="row-revers">
+                        <JobCard
+                          open={() => setViewJob(job)}
+                          key={job.id}
+                          {...job}
+                        />
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
             )}
           </Grid>
         </Grid>

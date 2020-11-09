@@ -15,6 +15,12 @@ export default createMuiTheme({
     secondary: {
       main: secondary,
     },
+    mainColor: {
+      main: "#8C76CC",
+    },
+    subColor: {
+      main: "#EA9494",
+    },
   },
   overrides: {
     MuiDialogActions: {
