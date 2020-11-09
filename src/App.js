@@ -15,6 +15,7 @@ import NewJobModal from "./components/Job/NewJobModal";
 import { firestore, app } from "./firebase/config";
 import { Close as CloseIcon } from "@material-ui/icons";
 import ViewJobModal from "./components/Job/ViewJobModal";
+import { v4 as uuid } from "uuid";
 
 export default () => {
   const [jobs, setJobs] = useState([]);
@@ -59,11 +60,19 @@ export default () => {
     setLoading(false);
   };
 
-  const postJob = async (jobDetails) => {
-    await firestore.collection("jobs").add({
-      ...jobDetails,
-      postedOn: app.firestore.FieldValue.serverTimestamp(),
-    });
+  const postJob = async (jobDetails, imageUrl) => {
+    const id = uuid();
+    await firestore
+      .collection("jobs")
+      .doc(id)
+      .set(
+        {
+          ...jobDetails,
+          postedOn: app.firestore.FieldValue.serverTimestamp(),
+          imageUrl: imageUrl,
+        },
+        { merge: true }
+      );
     fetchJobs();
   };
 
@@ -72,7 +81,7 @@ export default () => {
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={theme} style={{ transition: ".3s" }}>
       <Header openNewJobModal={() => setNewJobModal(true)} />
       <NewJobModal
         closeModal={() => setNewJobModal(false)}
@@ -81,16 +90,15 @@ export default () => {
       />
       <ViewJobModal job={viewJob} closeModal={() => setViewJob({})} />
       <Box mb={3}>
-        <Grid container spacing={3} justify="center">
+        <Grid container spacing={2} justify="center">
           <Grid item xs={10}>
             <SearchBar fetchJobsCustom={fetchJobsCustom} />
-
             {loading ? (
               <Box display="flex" justifyContent="center">
                 <CircularProgress />
               </Box>
             ) : (
-              <Grid>
+              <Grid style={{ marginBottom: "5px" }}>
                 {customSearch && (
                   <Box display="flex" justifyContent="flex-end">
                     <Button onClick={fetchJobs}>
