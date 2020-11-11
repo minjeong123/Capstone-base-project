@@ -17,7 +17,7 @@ import {
 } from "@material-ui/core";
 import { Close as CloseIcon } from "@material-ui/icons";
 import uploadFilesIcon from "../images/uploadFilesIcon.png";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { firebase } from "../../firebase/config";
 import { useAuth } from "../../contexts/AuthContext";
 
@@ -104,14 +104,18 @@ export default (props) => {
     experience: menuItemExp[0],
   };
 
-  const [jobDetails, setJobDetails] = useState(initState);
+  const [currentJobDetails, setCurrentJobDetails] = useState(props.job);
   const [fileUrl, setFileUrl] = useState(null);
   const inputRef = useRef();
   const previewRef = useRef();
 
+  useEffect(() => {
+    setCurrentJobDetails(props.job);
+  }, [props.job]);
+
   const handleChange = (e) => {
     e.persist();
-    setJobDetails((oldState) => ({
+    setCurrentJobDetails((oldState) => ({
       ...oldState,
       [e.target.name]: e.target.value,
     }));
@@ -138,10 +142,6 @@ export default (props) => {
     const fileRef = storageRef.child(filed.name);
     await fileRef.put(filed);
     setFileUrl(await fileRef.getDownloadURL());
-    // setJobDetails((oldState) => ({
-    //   ...oldState,
-    //   imageUrl: ,
-    // }));
 
     for (let i = 0; i < e.target.files.length; i++) {
       const newFile = e.target.files[i];
@@ -190,39 +190,46 @@ export default (props) => {
   };
 
   const addRemoveSkill = (skill) => {
-    jobDetails.skills.includes(skill)
-      ? setJobDetails((oldState) => ({
+    currentJobDetails.skills.includes(skill)
+      ? setCurrentJobDetails((oldState) => ({
           ...oldState,
           skills: oldState.skills.filter((s) => s !== skill),
         }))
-      : setJobDetails((oldState) => ({
+      : setCurrentJobDetails((oldState) => ({
           ...oldState,
           skills: oldState.skills.concat(skill),
         }));
   };
   // ** validation Check
   const handleSubmit = async () => {
-    for (const field in jobDetails) {
-      if (typeof jobDetails[field] === "string" && !jobDetails[field]) return;
+    for (const field in currentJobDetails) {
+      if (
+        typeof currentJobDetails[field] === "string" &&
+        !currentJobDetails[field]
+      )
+        return;
     }
-    if (!jobDetails.skills.length) return;
+    if (!currentJobDetails.skills.length) return;
     setLoading(true);
-    await props.postJob(jobDetails, fileUrl);
+    await props.updateJob(currentJobDetails, fileUrl);
     closeModal();
   };
 
   const closeModal = () => {
-    setJobDetails(initState);
+    setCurrentJobDetails(initState);
     setLoading(false);
+    props.closeViewModal();
     props.closeModal();
   };
 
+  console.log("job", props.job);
+
   return (
-    <Dialog open={props.newJobModal} fullWidth>
+    <Dialog open={props.updateJobModal} fullWidth>
       {/* <Dialog open={true} fullWidth> */}
       <DialogTitle>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          Post Job
+          Update Job
           <IconButton onClick={closeModal}>
             <CloseIcon />
           </IconButton>
@@ -235,7 +242,7 @@ export default (props) => {
             <FilledInput
               onChange={handleChange}
               name="title"
-              value={jobDetails.title}
+              value={currentJobDetails.title}
               autoComplete="off"
               placeholder="Job title *"
               disableUnderline
@@ -247,7 +254,7 @@ export default (props) => {
             <FilledInput
               onChange={handleChange}
               name="school"
-              value={jobDetails.school}
+              value={currentJobDetails.school}
               autoComplete="off"
               placeholder="Job school *"
               disableUnderline
@@ -259,7 +266,7 @@ export default (props) => {
             <Select
               onChange={handleChange}
               name="location"
-              value={jobDetails.location}
+              value={currentJobDetails.location}
               fullWidth
               disableUnderline
               variant="filled"
@@ -275,7 +282,7 @@ export default (props) => {
             <FilledInput
               onChange={handleChange}
               name="endDate"
-              value={jobDetails.endDate}
+              value={currentJobDetails.endDate}
               autoComplete="off"
               placeholder="Job endDate *"
               disableUnderline
@@ -295,7 +302,7 @@ export default (props) => {
               }}
               label="Number of People"
               name="nOfPeople"
-              value={jobDetails.nOfPeople}
+              value={currentJobDetails.nOfPeople}
               autoComplete="off"
               placeholder="Job # of people *"
               disableUnderline
@@ -308,7 +315,7 @@ export default (props) => {
             <FilledInput
               onChange={handleChange}
               name="description"
-              value={jobDetails.description}
+              value={currentJobDetails.description}
               autoComplete="off"
               placeholder="Job description *"
               disableUnderline
@@ -354,7 +361,7 @@ export default (props) => {
               onChange={handleChange}
               fullWidth
               name="type"
-              value={jobDetails.type}
+              value={currentJobDetails.type}
               disableUnderline
               variant="filled"
             >
@@ -368,7 +375,7 @@ export default (props) => {
             <Select
               onChange={handleChange}
               name="reward"
-              value={jobDetails.reward}
+              value={currentJobDetails.reward}
               fullWidth
               disableUnderline
               variant="filled"
@@ -386,7 +393,7 @@ export default (props) => {
                 <Box
                   onClick={() => addRemoveSkill(skill)}
                   className={`${classes.skillChip} ${
-                    jobDetails.skills.includes(skill) && classes.included
+                    currentJobDetails.skills.includes(skill) && classes.included
                   }`}
                   key={skill}
                 >
@@ -401,7 +408,7 @@ export default (props) => {
             <Select
               onChange={handleChange}
               name="sex"
-              value={jobDetails.sex}
+              value={currentJobDetails.sex}
               fullWidth
               disableUnderline
               variant="filled"
@@ -416,7 +423,7 @@ export default (props) => {
             <Select
               onChange={handleChange}
               name="Experience"
-              value={jobDetails.experience}
+              value={currentJobDetails.experience}
               fullWidth
               disableUnderline
               variant="filled"
@@ -442,13 +449,13 @@ export default (props) => {
             variant="contained"
             disableElevation
             className={classes.openJobButton}
-            // color="primary"
+            color="red"
             disabled={loading}
           >
             {loading ? (
               <CircularProgress color="secondary" size={22} />
             ) : (
-              "Post job"
+              "Update job"
             )}
           </Button>
         </Box>

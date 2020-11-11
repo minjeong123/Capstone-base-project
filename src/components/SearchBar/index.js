@@ -9,34 +9,8 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    backgroundColor: "#fff",
-    display: "flex",
-    boxShadow: "0px 1px 5px rgba(0,0,0,0.1)",
-    borderRadius: "5px",
-    "& > *": {
-      flex: 1,
-      height: "45px",
-      margin: "8px",
-    },
-    "& > Button": {
-      flex: 1,
-      height: "45px",
-      margin: "8px",
-      backgroundColor: "#e1bee7",
-    },
-  },
-  formControl: {
-    margin: theme.spacing(1),
-    minWidth: 120,
-  },
-  selectEmpty: {
-    marginTop: theme.spacing(2),
-  },
-}));
-
 export default (props) => {
+  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [jobSearch, setJobSearch] = useState({
     location: "서울",
@@ -73,8 +47,6 @@ export default (props) => {
     "기타업무",
   ];
   const menuItemSex = ["여성", "남성", "무관"];
-
-  const classes = useStyles();
 
   const handleChange = (e) => {
     e.persist();
@@ -188,3 +160,30 @@ export default (props) => {
     </Box>
   );
 };
+
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    backgroundColor: "#fff",
+    display: "flex",
+    boxShadow: "0px 1px 5px rgba(0,0,0,0.1)",
+    borderRadius: "5px",
+    "& > *": {
+      flex: 1,
+      height: "45px",
+      margin: "8px",
+    },
+    "& > Button": {
+      flex: 1,
+      height: "45px",
+      margin: "8px",
+      backgroundColor: "#e1bee7",
+    },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+  selectEmpty: {
+    marginTop: theme.spacing(2),
+  },
+}));

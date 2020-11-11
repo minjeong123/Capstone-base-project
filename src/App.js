@@ -5,7 +5,7 @@ import logo from "./components/images/logo.PNG";
 // import UserIcon from "./auth/UserIcon";
 // import Logout from "./auth/Logout";
 import PrivateRoute from "./auth/PrivateRoute";
-import { AppBar, Button, IconButton, Paper, Toolbar } from "@material-ui/core";
+import { AppBar, Button, CircularProgress, IconButton, Paper, Toolbar } from "@material-ui/core";
 // import { Signup, Login } from "./pages/";
 
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
@@ -84,7 +84,7 @@ function App(props) {
           </form>
         </Toolbar>
         <Toolbar style={{ flexDirection: "row" }}>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div><CircularProgress /></div>}>
             <Paper style={{ width: "120px", marginRight: "10px" }}>
               <UserIcon />
             </Paper>
@@ -97,7 +97,7 @@ function App(props) {
 
       <div>
         <AuthProvider>
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div><CircularProgress /></div>}>
             <Switch>
               <PrivateRoute exact path="/" component={UpdateProfilePage} />
               <PrivateRoute

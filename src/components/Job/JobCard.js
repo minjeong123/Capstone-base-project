@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Grid, Typography, makeStyles } from "@material-ui/core";
-import sampleImage1 from "../images/sampleImage.PNG";
+import defaultImage from "../images/sampleImage.PNG";
 // import { differenceInMinutes } from "date-fns";
 // import * as dateFns from "date-fns";
 // import formatDistance from "date-fns/formatDistance";
@@ -39,7 +39,7 @@ export default (props) => {
       <Grid container>
         <Grid item container fullWidth>
           <img
-            src={props.imageUrl}
+            src={props.imageUrl != null ? props.imageUrl : defaultImage}
             height="150px"
             width="355px"
             alt="testA"

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { lazy, Suspense, useEffect, useState } from "react";
 import {
   Box,
   Button,
@@ -7,12 +7,7 @@ import {
   ThemeProvider,
 } from "@material-ui/core";
 import theme from "./theme/theme";
-import Header from "./components/Header/index";
 import SearchBar from "./components/SearchBar";
-import JobCard from "./components/Job/JobCard";
-import NewJobModal from "./components/Job/NewJobModal";
-import ViewJobModal from "./components/Job/ViewJobModal";
-// import jobData from "./dummyData";
 import { firestore, app } from "./firebase/config";
 import { Close as CloseIcon } from "@material-ui/icons";
 import { v4 as uuid } from "uuid";
@@ -70,6 +65,21 @@ function JobLists(props) {
           ...jobDetails,
           postedOn: app.firestore.FieldValue.serverTimestamp(),
           imageUrl: imageUrl,
+          postId: id,
+        },
+        { merge: true }
+      );
+    fetchJobs();
+  };
+
+  const updateJob = async (jobDetails) => {
+    await firestore
+      .collection("jobs")
+      .doc(jobDetails.postId)
+      .set(
+        {
+          ...jobDetails,
+          postedOn: app.firestore.FieldValue.serverTimestamp(),
         },
         { merge: true }
       );
@@ -80,51 +90,68 @@ function JobLists(props) {
     fetchJobs();
   }, []);
 
+  const Header = lazy(() => import("./components/Header/index"));
+  const NewJobModal = lazy(() => import("./components/Job/NewJobModal"));
+  const ViewJobModal = lazy(() => import("./components/Job/ViewJobModal"));
+  const JobCard = lazy(() => import("./components/Job/JobCard"));
+
   return (
     <ThemeProvider theme={theme} style={{ transition: ".3s" }}>
-      <Header openNewJobModal={() => setNewJobModal(true)} />
-      <NewJobModal
-        closeModal={() => setNewJobModal(false)}
-        newJobModal={newJobModal}
-        postJob={postJob}
-      />
-      <ViewJobModal job={viewJob} closeModal={() => setViewJob({})} />
-      <Box mb={3}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={10}>
-            <SearchBar fetchJobsCustom={fetchJobsCustom} />
-            {loading ? (
-              <Box display="flex" justifyContent="center">
-                <CircularProgress />
-              </Box>
-            ) : (
-              <Grid style={{ marginBottom: "5px" }}>
-                {customSearch && (
-                  <Box display="flex" justifyContent="flex-end">
-                    <Button onClick={fetchJobs}>
-                      <CloseIcon size={20} />
-                      Custom Search
-                    </Button>
-                  </Box>
-                )}
-                <Grid container>
-                  {jobs.map((job) => (
-                    <Grid item xs={4}>
-                      <Box display="flex" justifyContent="row-revers">
-                        <JobCard
-                          open={() => setViewJob(job)}
-                          key={job.id}
-                          {...job}
-                        />
-                      </Box>
-                    </Grid>
-                  ))}
+      <Suspense
+        fallback={
+          <div>
+            <CircularProgress />
+          </div>
+        }
+      >
+        <Header openNewJobModal={() => setNewJobModal(true)} />
+        <NewJobModal
+          closeModal={() => setNewJobModal(false)}
+          newJobModal={newJobModal}
+          postJob={postJob}
+        />
+        <ViewJobModal
+          job={viewJob}
+          closeModal={() => setViewJob({})}
+          updateJob={updateJob}
+        />
+        <Box mb={3}>
+          <Grid container spacing={2} justify="center">
+            <Grid item xs={10}>
+              <SearchBar fetchJobsCustom={fetchJobsCustom} />
+              {loading ? (
+                <Box display="flex" justifyContent="center">
+                  <CircularProgress />
+                </Box>
+              ) : (
+                <Grid style={{ marginBottom: "5px" }}>
+                  {customSearch && (
+                    <Box display="flex" justifyContent="flex-end">
+                      <Button onClick={fetchJobs}>
+                        <CloseIcon size={20} />
+                        Custom Search
+                      </Button>
+                    </Box>
+                  )}
+                  <Grid container>
+                    {jobs.map((job) => (
+                      <Grid item xs={4}>
+                        <Box display="flex" justifyContent="row-revers">
+                          <JobCard
+                            open={() => setViewJob(job)}
+                            key={job.id}
+                            {...job}
+                          />
+                        </Box>
+                      </Grid>
+                    ))}
+                  </Grid>
                 </Grid>
-              </Grid>
-            )}
+              )}
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
+        </Box>
+      </Suspense>
     </ThemeProvider>
   );
 }

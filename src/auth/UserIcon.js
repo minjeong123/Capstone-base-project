@@ -1,6 +1,5 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
-import userIcon from "../components/images/userIcon.png";
 import { AccountCircle } from "@material-ui/icons";
 import { Grid } from "@material-ui/core";
 

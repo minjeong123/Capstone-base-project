@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -18,9 +18,16 @@ import {
 } from "@material-ui/icons";
 // import { format } from "data-fns";
 import * as dateFns from "date-fns";
+import { useAuth } from "../../contexts/AuthContext";
+import UpdateJobModal from "./UpdateJobModal";
 
 export default (props) => {
   const classes = useStyles();
+  const { currentUser } = useAuth();
+  const [loading, setLoading] = useState(false);
+  const [updateJobModal, setUpdateJobModal] = useState(false);
+
+  console.log("props.job.userId", props.job.userId);
 
   return (
     <Dialog open={!!Object.keys(props.job).length} fullWidth>
@@ -34,6 +41,10 @@ export default (props) => {
       </DialogTitle>
       <DialogContent>
         <Box>
+          <Box className={classes.info} display="flex">
+            <Typography variant="caption">Written by : </Typography>
+            <Typography variant="body2">{props.job.userId}</Typography>
+          </Box>
           <Box className={classes.info} display="flex">
             <Typography variant="caption">Posted on : </Typography>
             <Typography variant="body2">
@@ -95,16 +106,48 @@ export default (props) => {
         </Box>
       </DialogContent>
       <DialogActions>
+        {props.job.userId === currentUser.email ? (
+          <Grid>
+            <Button
+              variant="contained"
+              color="secondary"
+              onClick={() => setUpdateJobModal(true)}
+            >
+              수정하기
+            </Button>
+            <UpdateJobModal
+              closeModal={() => setUpdateJobModal(false)}
+              closeViewModal={props.closeModal}
+              updateJobModal={updateJobModal}
+              updateJob={props.updateJob}
+              job={props.job}
+            />
+          </Grid>
+        ) : null}
+
         <Button
-          onClick={props.openNewJobModal}
+          onClick={props.new}
           variant="contained"
-          className={classes.openMailButton}
+          className={classes.openMessageButton}
           disableElevation
+          disabled={loading}
         >
-          <IconButton onClick={props.closeModal}>
-            <Typography>쪽지 보내기(미구현)</Typography>
-            <MessageIcon />
-          </IconButton>
+          <Box display="flex" flexDirection="row" paddingTop="6px">
+            {loading ? (
+              <CircularProgress color="secondary" size={22} />
+            ) : (
+              <>
+                <Grid>
+                  {" "}
+                  <Typography>쪽지 보내기</Typography>
+                </Grid>
+                <Grid>
+                  {" "}
+                  <MessageIcon />
+                </Grid>
+              </>
+            )}
+          </Box>
         </Button>
       </DialogActions>
     </Dialog>
@@ -138,7 +181,7 @@ const useStyles = makeStyles((theme) => ({
     color: "#fff",
     backgroundColor: theme.palette.mainColor.main,
   },
-  openMailButton: {
+  openMessageButton: {
     backgroundColor: "#e1bee7",
   },
 }));
