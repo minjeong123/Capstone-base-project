@@ -5,37 +5,6 @@ import sampleImage1 from "../images/sampleImage.PNG";
 // import * as dateFns from "date-fns";
 // import formatDistance from "date-fns/formatDistance";
 
-const useStyles = makeStyles((theme) => ({
-  wrapper: {
-    border: "1px solid #e8e8e8",
-    cursor: "pointer",
-    height: "300px",
-
-    "&:hover": {
-      boxShadow: "0px 5px 25px rgba(0,0,0,0.1)",
-      borderLeft: "6px solid " + `${theme.palette.mainColor.main}`,
-    },
-  },
-  locationName: {
-    fontSize: "13.5px",
-    backgroundColor: "#e1bee7",
-    padding: theme.spacing(0.75),
-    borderRadius: "5px",
-    display: "inline-block",
-    fontWeight: 600,
-  },
-  skillChip: {
-    margin: theme.spacing(0.5),
-    padding: theme.spacing(0.75),
-    fontSize: "9.5px",
-    borderRadius: "5px",
-    transition: ".3s",
-    fontWeight: 600,
-    backgroundColor: theme.palette.mainColor.main,
-    color: "#fff",
-  },
-}));
-
 export default (props) => {
   const classes = useStyles();
 
@@ -125,8 +94,33 @@ export default (props) => {
   );
 };
 
-{
-  /* <Box mt={2}>
-              <Button variant="outlined">Check</Button>
-            </Box> */
-}
+const useStyles = makeStyles((theme) => ({
+  wrapper: {
+    border: "1px solid #e8e8e8",
+    cursor: "pointer",
+    height: "300px",
+
+    "&:hover": {
+      boxShadow: "0px 5px 25px rgba(0,0,0,0.1)",
+      borderLeft: "6px solid " + `${theme.palette.mainColor.main}`,
+    },
+  },
+  locationName: {
+    fontSize: "13.5px",
+    backgroundColor: "#e1bee7",
+    padding: theme.spacing(0.75),
+    borderRadius: "5px",
+    display: "inline-block",
+    fontWeight: 600,
+  },
+  skillChip: {
+    margin: theme.spacing(0.5),
+    padding: theme.spacing(0.75),
+    fontSize: "9.5px",
+    borderRadius: "5px",
+    transition: ".3s",
+    fontWeight: 600,
+    backgroundColor: theme.palette.mainColor.main,
+    color: "#fff",
+  },
+}));

@@ -2,16 +2,20 @@ import React, { Suspense, lazy } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import logo from "./components/images/logo.PNG";
-import UserIcon from "./auth/UserIcon";
-import Logout from "./auth/Logout";
+// import UserIcon from "./auth/UserIcon";
+// import Logout from "./auth/Logout";
 import PrivateRoute from "./auth/PrivateRoute";
-import { AccountCircle, Router } from "@material-ui/icons";
 import { AppBar, Button, IconButton, Paper, Toolbar } from "@material-ui/core";
-import { Signup, Login } from "./pages/";
+// import { Signup, Login } from "./pages/";
 
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword.page"));
 const JobListsPage = lazy(() => import("./JobLists"));
+const SignupPage = lazy(() => import("./pages/Signup.page"));
+const LoginPage = lazy(() => import("./pages/Login.page"));
+
+const UserIcon = lazy(() => import("./auth/UserIcon"));
+const Logout = lazy(() => import("./auth/Logout"));
 
 function App(props) {
   const { currentUser } = useAuth();
@@ -80,12 +84,14 @@ function App(props) {
           </form>
         </Toolbar>
         <Toolbar style={{ flexDirection: "row" }}>
-          <Paper style={{ width: "120px", marginRight: "10px" }}>
-            <UserIcon />
-          </Paper>
-          <Paper>
-            <Logout />
-          </Paper>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Paper style={{ width: "120px", marginRight: "10px" }}>
+              <UserIcon />
+            </Paper>
+            <Paper>
+              <Logout />
+            </Paper>
+          </Suspense>
         </Toolbar>
       </AppBar>
 
@@ -98,10 +104,10 @@ function App(props) {
                 path="/update-profile"
                 component={UpdateProfilePage}
               />
-              <Route path="/signup" component={Signup} />
+              <Route path="/signup" component={SignupPage} />
               <Route
                 path="/login"
-                component={Login}
+                component={LoginPage}
                 style={{ flexDirection: "row" }}
               />
               <Route

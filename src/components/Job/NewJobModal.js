@@ -20,37 +20,9 @@ import uploadFilesIcon from "../images/uploadFilesIcon.png";
 import React, { useRef, useState } from "react";
 import { firebase } from "../../firebase/config";
 
-const useStyles = makeStyles((theme) => ({
-  skillChip: {
-    margin: theme.spacing(0.5),
-    padding: theme.spacing(0.75),
-    fontSize: "14.5px",
-    borderRadius: "5px",
-    transition: ".3s",
-
-    fontWeight: 600,
-    border: `1px solid ${theme.palette.mainColor.main}`,
-    color: theme.palette.mainColor.main,
-    cursor: "pointer",
-
-    "&:hover": {
-      backgroundColor: theme.palette.mainColor.main,
-      color: "#fff",
-    },
-  },
-  included: {
-    backgroundColor: theme.palette.mainColor.main,
-    color: "#fff",
-  },
-  openJobButton: {
-    backgroundColor: "#e1bee7",
-  },
-}));
-
 export default (props) => {
   const [loading, setLoading] = useState(false);
   const [files, setFiles] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
 
   const fileTypes = [
     "image/apng",
@@ -362,8 +334,6 @@ export default (props) => {
                 style={{
                   display: "none",
                   opacity: 0,
-                  width: "1px",
-                  height: "1px",
                   width: "500px",
                   height: "400px",
                 }}
@@ -485,39 +455,29 @@ export default (props) => {
   );
 };
 
-{
-  /* <Grid item xs={6}>
-            <FilledInput
-              onChange={handleChange}
-              name="companyName"
-              value={jobDetails.companyName}
-              autoComplete="off"
-              placeholder="Company name *"
-              disableUnderline
-              fullWidth
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <FilledInput
-              onChange={handleChange}
-              name="companyUrl"
-              value={jobDetails.companyUrl}
-              autoComplete="off"
-              placeholder="Company URL *"
-              disableUnderline
-              fullWidth
-            />
-          </Grid>
+const useStyles = makeStyles((theme) => ({
+  skillChip: {
+    margin: theme.spacing(0.5),
+    padding: theme.spacing(0.75),
+    fontSize: "14.5px",
+    borderRadius: "5px",
+    transition: ".3s",
 
-          <Grid item xs={6}>
-            <FilledInput
-              onChange={handleChange}
-              name="link"
-              value={jobDetails.link}
-              autoComplete="off"
-              placeholder="Job link *"
-              disableUnderline
-              fullWidth
-            />
-          </Grid> */
-}
+    fontWeight: 600,
+    border: `1px solid ${theme.palette.mainColor.main}`,
+    color: theme.palette.mainColor.main,
+    cursor: "pointer",
+
+    "&:hover": {
+      backgroundColor: theme.palette.mainColor.main,
+      color: "#fff",
+    },
+  },
+  included: {
+    backgroundColor: theme.palette.mainColor.main,
+    color: "#fff",
+  },
+  openJobButton: {
+    backgroundColor: "#e1bee7",
+  },
+}));

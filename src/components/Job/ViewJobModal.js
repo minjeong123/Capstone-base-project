@@ -19,38 +19,6 @@ import {
 // import { format } from "data-fns";
 import * as dateFns from "date-fns";
 
-const useStyles = makeStyles((theme) => ({
-  info: {
-    "& > *": {
-      margin: "4px",
-    },
-  },
-  skillChip: {
-    margin: theme.spacing(0.5),
-    padding: theme.spacing(0.75),
-    fontSize: "14.5px",
-    borderRadius: "5px",
-    transition: ".3s",
-    fontWeight: 600,
-    backgroundColor: theme.palette.secondary.main,
-    color: "#fff",
-  },
-  openJobButton: {
-    // backgroundColor: theme.palette.subColor.main,
-    margin: theme.spacing(0.5),
-    padding: theme.spacing(0.75),
-    fontSize: "14.5px",
-    borderRadius: "5px",
-    transition: ".3s",
-    fontWeight: 600,
-    color: "#fff",
-    backgroundColor: theme.palette.mainColor.main,
-  },
-  openMailButton: {
-    backgroundColor: "#e1bee7",
-  },
-}));
-
 export default (props) => {
   const classes = useStyles();
 
@@ -143,11 +111,34 @@ export default (props) => {
   );
 };
 
-// <Button
-//           variant="outlined"
-//           component="a"
-//           href={props.job.link}
-//           target="_blank"
-//         >
-//           Apply
-//         </Button>
+const useStyles = makeStyles((theme) => ({
+  info: {
+    "& > *": {
+      margin: "4px",
+    },
+  },
+  skillChip: {
+    margin: theme.spacing(0.5),
+    padding: theme.spacing(0.75),
+    fontSize: "14.5px",
+    borderRadius: "5px",
+    transition: ".3s",
+    fontWeight: 600,
+    backgroundColor: theme.palette.secondary.main,
+    color: "#fff",
+  },
+  openJobButton: {
+    // backgroundColor: theme.palette.subColor.main,
+    margin: theme.spacing(0.5),
+    padding: theme.spacing(0.75),
+    fontSize: "14.5px",
+    borderRadius: "5px",
+    transition: ".3s",
+    fontWeight: 600,
+    color: "#fff",
+    backgroundColor: theme.palette.mainColor.main,
+  },
+  openMailButton: {
+    backgroundColor: "#e1bee7",
+  },
+}));
