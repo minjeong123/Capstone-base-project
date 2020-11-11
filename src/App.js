@@ -1,130 +1,125 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  ThemeProvider,
-} from "@material-ui/core";
-import theme from "./theme/theme";
-import Header from "./components/Header/index";
-import SearchBar from "./components/SearchBar";
-import JobCard from "./components/Job/JobCard";
-import NewJobModal from "./components/Job/NewJobModal";
-// import jobData from "./dummyData";
-import { firestore, app } from "./firebase/config";
-import { Close as CloseIcon } from "@material-ui/icons";
-import ViewJobModal from "./components/Job/ViewJobModal";
-import { v4 as uuid } from "uuid";
+import React, { Suspense, lazy } from "react";
+import { Link, Route, Switch } from "react-router-dom";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import logo from "./components/images/logo.PNG";
+import UserIcon from "./auth/UserIcon";
+import Logout from "./auth/Logout";
+import PrivateRoute from "./auth/PrivateRoute";
+import { AccountCircle, Router } from "@material-ui/icons";
+import { AppBar, Button, IconButton, Paper, Toolbar } from "@material-ui/core";
+import { Signup, Login } from "./pages/";
 
-export default () => {
-  const [jobs, setJobs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [customSearch, setCustomSearch] = useState(false);
-  const [newJobModal, setNewJobModal] = useState(false);
-  const [viewJob, setViewJob] = useState({});
+const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
+const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword.page"));
+const JobListsPage = lazy(() => import("./JobLists"));
 
-  const fetchJobs = async () => {
-    setCustomSearch(false);
-    setLoading(true);
-    const req = await firestore
-      .collection("jobs")
-      .orderBy("postedOn", "desc")
-      .get();
-    const tempJobs = req.docs.map((job) => ({
-      ...job.data(),
-      id: job.id,
-      postedOn: job.data().postedOn.toDate(),
-    }));
-    setJobs(tempJobs);
-    setLoading(false);
-  };
-
-  const fetchJobsCustom = async (jobSearch) => {
-    setLoading(true);
-    setCustomSearch(true);
-    const req = await firestore
-      .collection("jobs")
-      .orderBy("postedOn", "desc")
-      .where("location", "==", jobSearch.location)
-      .where("reward", "==", jobSearch.reward)
-      .where("skills", "array-contains", jobSearch.skills)
-      .where("sex", "==", jobSearch.sex)
-      .get();
-    const tempJobs = req.docs.map((job) => ({
-      ...job.data(),
-      id: job.id,
-      postedOn: job.data().postedOn.toDate(),
-    }));
-    setJobs(tempJobs);
-    setLoading(false);
-  };
-
-  const postJob = async (jobDetails, imageUrl) => {
-    const id = uuid();
-    await firestore
-      .collection("jobs")
-      .doc(id)
-      .set(
-        {
-          ...jobDetails,
-          postedOn: app.firestore.FieldValue.serverTimestamp(),
-          imageUrl: imageUrl,
-        },
-        { merge: true }
-      );
-    fetchJobs();
-  };
-
-  useEffect(() => {
-    fetchJobs();
-  }, []);
+function App(props) {
+  const { currentUser } = useAuth();
 
   return (
-    <ThemeProvider theme={theme} style={{ transition: ".3s" }}>
-      <Header openNewJobModal={() => setNewJobModal(true)} />
-      <NewJobModal
-        closeModal={() => setNewJobModal(false)}
-        newJobModal={newJobModal}
-        postJob={postJob}
-      />
-      <ViewJobModal job={viewJob} closeModal={() => setViewJob({})} />
-      <Box mb={3}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={10}>
-            <SearchBar fetchJobsCustom={fetchJobsCustom} />
-            {loading ? (
-              <Box display="flex" justifyContent="center">
-                <CircularProgress />
-              </Box>
-            ) : (
-              <Grid style={{ marginBottom: "5px" }}>
-                {customSearch && (
-                  <Box display="flex" justifyContent="flex-end">
-                    <Button onClick={fetchJobs}>
-                      <CloseIcon size={20} />
-                      Custom Search
-                    </Button>
-                  </Box>
-                )}
-                <Grid container>
-                  {jobs.map((job) => (
-                    <Grid item xs={4}>
-                      <Box display="flex" justifyContent="row-revers">
-                        <JobCard
-                          open={() => setViewJob(job)}
-                          key={job.id}
-                          {...job}
-                        />
-                      </Box>
-                    </Grid>
-                  ))}
-                </Grid>
-              </Grid>
-            )}
-          </Grid>
-        </Grid>
-      </Box>
-    </ThemeProvider>
+    <div style={{ flex: 1, flexDirection: "flex-start" }}>
+      <AppBar
+        className="navbar navbar-expand-sm navbar-light bg-light"
+        style={{ flexDirection: "row" }}
+      >
+        <Toolbar>
+          <IconButton>
+            <a
+              href="/"
+              className="navbar-brand"
+              style={{
+                color: "#7563A7",
+                fontWeight: "500",
+              }}
+            >
+              <img
+                src={logo}
+                width="75"
+                height="75"
+                alt="testA"
+                style={{}}
+              ></img>
+            </a>
+          </IconButton>
+          <Button variant="contained" style={{ marginRight: "5px" }}>
+            <Link
+              to={"/talent"}
+              style={{ textDecoration: "none", color: "black" }}
+            >
+              재능교환
+            </Link>
+          </Button>
+
+          {currentUser ? null : (
+            <Button variant="contained" style={{ marginRight: "5px" }}>
+              <Link
+                to={"/signup"}
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                Signup
+              </Link>
+            </Button>
+          )}
+          {currentUser ? null : (
+            <Button variant="contained" style={{ marginRight: "5px" }}>
+              <Link
+                to={"/login"}
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                login
+              </Link>
+            </Button>
+          )}
+        </Toolbar>
+        <Toolbar style={{ flexDirection: "row" }}>
+          <form>
+            <input type="search" placeholder="Search" />
+            <Button variant="contained" color="secondary" type="submit">
+              Search
+            </Button>
+          </form>
+        </Toolbar>
+        <Toolbar style={{ flexDirection: "row" }}>
+          <Paper style={{ width: "120px", marginRight: "10px" }}>
+            <UserIcon />
+          </Paper>
+          <Paper>
+            <Logout />
+          </Paper>
+        </Toolbar>
+      </AppBar>
+
+      <div>
+        <AuthProvider>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Switch>
+              <PrivateRoute exact path="/" component={UpdateProfilePage} />
+              <PrivateRoute
+                path="/update-profile"
+                component={UpdateProfilePage}
+              />
+              <Route path="/signup" component={Signup} />
+              <Route
+                path="/login"
+                component={Login}
+                style={{ flexDirection: "row" }}
+              />
+              <Route
+                path="/forgot-password"
+                component={ForgotPasswordPage}
+                style={{ flexDirection: "row" }}
+              />
+              <Route
+                path="/talent"
+                component={JobListsPage}
+                style={{ flexDirection: "row" }}
+              />
+            </Switch>
+          </Suspense>
+        </AuthProvider>
+      </div>
+    </div>
   );
-};
+}
+
+export default App;

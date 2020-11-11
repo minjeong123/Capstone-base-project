@@ -1,16 +1,18 @@
-import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
-import userIcon from './images/edumeet_userIcon.png';
+import React from "react";
+import { useAuth } from "../contexts/AuthContext";
+import userIcon from "../components/images/userIcon.png";
+import { AccountCircle } from "@material-ui/icons";
+import { Grid } from "@material-ui/core";
 
 export default function UserIcon() {
   const { currentUser } = useAuth();
   return (
-    <a href="/" className="navbar-brand w-100 text-center mt-1">
+    <a href="/" className="navbar-brand text-center mt-1">
       {currentUser ? (
-        <>
-          <img src={userIcon} width="55" height="55" alt="testA" style={{}} />
-          <strong style={{ fontSize: '14px' }}>{currentUser.email}</strong>
-        </>
+        <Grid style={{ width: "150px" }}>
+          <AccountCircle style={{ marginRight: "10px" }} />
+          <strong style={{ fontSize: "14px" }}>{currentUser.email}</strong>
+        </Grid>
       ) : null}
     </a>
   );

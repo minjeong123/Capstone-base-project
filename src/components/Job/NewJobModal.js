@@ -157,9 +157,6 @@ export default (props) => {
     }
   }
 
-  var fname = [];
-  var url = [];
-
   const onFileChange = async (e) => {
     e.persist();
     const filed = e.target.files[0];

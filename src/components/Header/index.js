@@ -26,7 +26,7 @@ export default (props) => {
           <Box display="flex" justifyContent="space-between">
             <img className={classes.img} src={logo} alt="testA" />
             <Typography variant="h4" style={{ padding: "40px 0" }}>
-              부엉이 구하러 가기
+              부엉이 구하러 가기(미정)
             </Typography>
             <Button
               onClick={props.openNewJobModal}

@@ -1,7 +1,11 @@
 import React, { useRef, useState } from "react";
-import { Form, Button, Card, Alert } from "react-bootstrap";
+// import { Form, Button, Card, Alert } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { Button, Card, FormControl, InputLabel } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import CardContent from "@material-ui/core/CardContent";
+import { AlertTitle } from "@material-ui/lab";
 
 export default function UpdateProfile() {
   const emailRef = useRef();
@@ -45,11 +49,44 @@ export default function UpdateProfile() {
     <div className="w-100" style={{ maxWidth: "400px" }}>
       <>
         <Card>
-          <Card.Body>
+          <CardContent>
             <h2 className="text-center mb-4">프로필 편집</h2>
-            {error && <Alert variant="danger">{error}</Alert>}
-            <Form onSubmit={handleSubmit}>
-              <Form.Group id="email">
+            {error && (
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
+                This is an error alert — <strong>{error}</strong>
+              </Alert>
+            )}
+            <form onSubmit={handleSubmit}>
+              <FormControl id="email">
+                <InputLabel htmlFor="imail-input">이메일</InputLabel>
+                <input
+                  type="email"
+                  ref={emailRef}
+                  required
+                  defaultValue={currentUser.email}
+                />
+              </FormControl>
+              <FormControl id="password">
+                <InputLabel htmlFor="password-input">비밀번호</InputLabel>
+                <input
+                  type="password"
+                  ref={passwordRef}
+                  placeholder="Leave blank to keep the same"
+                />
+              </FormControl>
+              <FormControl id="password-confirm">
+                <InputLabel htmlFor="passwordConfirm-input">
+                  비밀번호 확인
+                </InputLabel>
+                <input
+                  type="password"
+                  ref={passwordConfirmRef}
+                  placeholder="Leave blank to keep the same"
+                />
+              </FormControl>
+
+              {/* <Form.Group id="email">
                 <Form.Label>이메일</Form.Label>
                 <Form.Control
                   type="email"
@@ -73,12 +110,18 @@ export default function UpdateProfile() {
                   ref={passwordConfirmRef}
                   placeholder="Leave blank to keep the same"
                 />
-              </Form.Group>
-              <Button disabled={loading} className="w-100" type="submit">
+              </Form.Group> */}
+              <Button
+                disabled={loading}
+                variant="contained"
+                color="secondary"
+                className="w-100"
+                type="submit"
+              >
                 변경하기
               </Button>
-            </Form>
-          </Card.Body>
+            </form>
+          </CardContent>
         </Card>
         <div className="w-100 text-center mt-2">
           <Link to="/">취소</Link>
