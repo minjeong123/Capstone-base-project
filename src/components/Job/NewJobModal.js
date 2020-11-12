@@ -18,8 +18,8 @@ import {
 import { Close as CloseIcon } from "@material-ui/icons";
 import uploadFilesIcon from "../images/uploadFilesIcon.png";
 import React, { useRef, useState } from "react";
-import { firebase } from "../../firebase/config";
 import { useAuth } from "../../contexts/AuthContext";
+import { firebase } from "../../firebase/config";
 
 export default (props) => {
   const classes = useStyles();

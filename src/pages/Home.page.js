@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { firestore } from "../firebase/config";
 import JobCard from "../components/Job/JobCard";
 import {
   Box,
@@ -10,7 +11,6 @@ import {
 import theme from "../theme/theme";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { useHistory } from "react-router-dom";
-import { firestore } from "../firebase/config";
 
 export default function HomePage() {
   const [jobs, setJobs] = useState([]);

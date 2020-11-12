@@ -151,7 +151,6 @@ export default (props) => {
       <Button
         disabled={loading}
         variant="contained"
-        // color="primary-light"
         disableElevation
         onClick={search}
       >

@@ -30,7 +30,6 @@ export default (props) => {
 
 const useStyles = makeStyles((theme) => ({
   openJobButton: {
-    // backgroundColor: theme.palette.subColor.main,
     height: "50px",
     width: "170px",
     backgroundColor: "#e1bee7",

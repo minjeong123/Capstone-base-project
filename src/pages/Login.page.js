@@ -1,6 +1,6 @@
 import React from "react";
-import { Container } from "@material-ui/core";
 import Login from "../auth/Login";
+import { Container } from "@material-ui/core";
 
 export default function LoginPage() {
   return (

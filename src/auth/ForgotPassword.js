@@ -54,10 +54,6 @@ export default function ForgotPassword() {
               </Alert>
             )}
             <form onSubmit={handleSubmit}>
-              {/* <Form.Group id="email">
-                <Form.Label>이메일</Form.Label>
-                <Form.Control type="email" ref={emailRef} required />
-              </Form.Group> */}
               <FormControl id="email">
                 <label htmlFor="imail-input">이메일</label>
                 <input

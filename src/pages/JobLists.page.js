@@ -1,6 +1,6 @@
 import React from "react";
-import { Container } from "@material-ui/core";
 import JobLists from "../JobLists";
+import { Container } from "@material-ui/core";
 
 export default function JobListsPage() {
   return (

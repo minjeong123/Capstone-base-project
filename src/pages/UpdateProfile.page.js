@@ -1,6 +1,6 @@
 import React from "react";
 import UpdateProfile from "../auth/UpdateProfile";
-import { Container } from "@material-ui/core";
+import { Container, Grid } from "@material-ui/core";
 
 export default function UpdateProfilePage() {
   return (

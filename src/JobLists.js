@@ -1,4 +1,6 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
+import { useAuth } from "./contexts/AuthContext";
+import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -11,8 +13,6 @@ import SearchBar from "./components/SearchBar";
 import { firestore, app } from "./firebase/config";
 import { Close as CloseIcon } from "@material-ui/icons";
 import { v4 as uuid } from "uuid";
-import { useAuth } from "./contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 
 function JobLists(props) {
   const [jobs, setJobs] = useState([]);

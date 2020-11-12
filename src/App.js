@@ -2,8 +2,6 @@ import React, { Suspense, lazy } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import logo from "./components/images/logo.PNG";
-// import UserIcon from "./auth/UserIcon";
-// import Logout from "./auth/Logout";
 import PrivateRoute from "./auth/PrivateRoute";
 import {
   AppBar,

@@ -1,7 +1,7 @@
 import React from "react";
 import { useAuth } from "../contexts/AuthContext";
-import { AccountCircle } from "@material-ui/icons";
 import { Grid } from "@material-ui/core";
+import { AccountCircle } from "@material-ui/icons";
 
 export default function UserIcon() {
   const { currentUser } = useAuth();

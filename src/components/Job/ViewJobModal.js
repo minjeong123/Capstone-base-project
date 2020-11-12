@@ -16,7 +16,6 @@ import {
   Close as CloseIcon,
   MailOutline as MessageIcon,
 } from "@material-ui/icons";
-// import { format } from "data-fns";
 import * as dateFns from "date-fns";
 import { useAuth } from "../../contexts/AuthContext";
 import UpdateJobModal from "./UpdateJobModal";

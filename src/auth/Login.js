@@ -62,7 +62,6 @@ export default function Login() {
             <h2 className="text-center mb-4">
               <img src={logo} width="185" height="185" alt="testA" style={{}} />
             </h2>
-            {/* {error && <Alert variant="danger">{error}</Alert>} */}
             {error && (
               <Alert severity="error">
                 <AlertTitle>Error</AlertTitle>
