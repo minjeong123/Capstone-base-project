@@ -119,7 +119,7 @@ function App(props) {
             }
           >
             <Switch>
-              <Route exact path="/" component={HomePage} />
+              <PrivateRoute exact path="/" component={JobListsPage} />
               <PrivateRoute
                 path="/update-profile"
                 component={UpdateProfilePage}
@@ -133,6 +133,11 @@ function App(props) {
               <Route
                 path="/forgot-password"
                 component={ForgotPasswordPage}
+                style={{ flexDirection: "row" }}
+              />
+              <Route
+                path="/home"
+                component={HomePage}
                 style={{ flexDirection: "row" }}
               />
               <PrivateRoute

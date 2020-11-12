@@ -47,7 +47,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/update-profile");
+      history.push("/talent");
     } catch {
       setError("로그인에 실패했습니다.");
     }

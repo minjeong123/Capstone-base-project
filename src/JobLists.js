@@ -90,6 +90,16 @@ function JobLists(props) {
     fetchJobs();
   };
 
+  const deleteJob = async (jobDetails) => {
+    await firestore
+      .collection("jobs")
+      .doc(jobDetails.postId)
+      .delete()
+      .then(() => console.log("Document deleted")) // Document deleted
+      .catch((error) => console.error("Error deleting document", error));
+    fetchJobs();
+  };
+
   useEffect(() => {
     fetchJobs();
   }, []);
@@ -118,6 +128,7 @@ function JobLists(props) {
           job={viewJob}
           closeModal={() => setViewJob({})}
           updateJob={updateJob}
+          deleteJob={deleteJob}
         />
         <Box mb={3}>
           <Grid container spacing={2} justify="center">

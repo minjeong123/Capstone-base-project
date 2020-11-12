@@ -29,6 +29,13 @@ export default (props) => {
 
   console.log("props.job.userId", props.job.userId);
 
+  const closeModal = () => {
+    setLoading(false);
+
+    // props.closeViewModal();
+    props.closeModal();
+  };
+
   return (
     <Dialog open={!!Object.keys(props.job).length} fullWidth>
       <DialogTitle>
@@ -109,11 +116,11 @@ export default (props) => {
         {props.job.userId === currentUser.email ? (
           <Grid>
             <Button
+              style={{ marginRight: "10px" }}
               variant="contained"
-              color="secondary"
               onClick={() => setUpdateJobModal(true)}
             >
-              수정하기
+              수정
             </Button>
             <UpdateJobModal
               closeModal={() => setUpdateJobModal(false)}
@@ -122,11 +129,33 @@ export default (props) => {
               updateJob={props.updateJob}
               job={props.job}
             />
+
+            {/* <Button
+              style={{ backgroundColor: "red" }}
+              variant="contained"
+              onClick={() => setUpdateJobModal(true)}
+            >
+              삭제
+            </Button> */}
+            <Button
+              style={{ backgroundColor: "red" }}
+              variant="contained"
+              onClick={() => {
+                if (
+                  window.confirm("Are you sure you wish to delete this post?")
+                ) {
+                  props.deleteJob(props.job);
+                  closeModal();
+                }
+              }}
+            >
+              삭제
+            </Button>
           </Grid>
         ) : null}
 
         <Button
-          // onClick={props.new} 
+          // onClick={props.new}
           variant="contained"
           className={classes.openMessageButton}
           disableElevation
