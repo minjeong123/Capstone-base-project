@@ -5,7 +5,14 @@ import logo from "./components/images/logo.PNG";
 // import UserIcon from "./auth/UserIcon";
 // import Logout from "./auth/Logout";
 import PrivateRoute from "./auth/PrivateRoute";
-import { AppBar, Button, CircularProgress, IconButton, Paper, Toolbar } from "@material-ui/core";
+import {
+  AppBar,
+  Button,
+  CircularProgress,
+  IconButton,
+  Paper,
+  Toolbar,
+} from "@material-ui/core";
 // import { Signup, Login } from "./pages/";
 
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
@@ -13,6 +20,7 @@ const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword.page"));
 const JobListsPage = lazy(() => import("./JobLists"));
 const SignupPage = lazy(() => import("./pages/Signup.page"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
+const HomePage = lazy(() => import("./pages/Home.page"));
 
 const UserIcon = lazy(() => import("./auth/UserIcon"));
 const Logout = lazy(() => import("./auth/Logout"));
@@ -84,7 +92,13 @@ function App(props) {
           </form>
         </Toolbar>
         <Toolbar style={{ flexDirection: "row" }}>
-          <Suspense fallback={<div><CircularProgress /></div>}>
+          <Suspense
+            fallback={
+              <div>
+                <CircularProgress />
+              </div>
+            }
+          >
             <Paper style={{ width: "120px", marginRight: "10px" }}>
               <UserIcon />
             </Paper>
@@ -97,9 +111,15 @@ function App(props) {
 
       <div>
         <AuthProvider>
-          <Suspense fallback={<div><CircularProgress /></div>}>
+          <Suspense
+            fallback={
+              <div>
+                <CircularProgress />
+              </div>
+            }
+          >
             <Switch>
-              <PrivateRoute exact path="/" component={UpdateProfilePage} />
+              <Route exact path="/" component={HomePage} />
               <PrivateRoute
                 path="/update-profile"
                 component={UpdateProfilePage}
@@ -115,7 +135,7 @@ function App(props) {
                 component={ForgotPasswordPage}
                 style={{ flexDirection: "row" }}
               />
-              <Route
+              <PrivateRoute
                 path="/talent"
                 component={JobListsPage}
                 style={{ flexDirection: "row" }}

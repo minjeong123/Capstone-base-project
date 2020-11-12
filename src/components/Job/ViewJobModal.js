@@ -126,7 +126,7 @@ export default (props) => {
         ) : null}
 
         <Button
-          onClick={props.new}
+          // onClick={props.new} 
           variant="contained"
           className={classes.openMessageButton}
           disableElevation
