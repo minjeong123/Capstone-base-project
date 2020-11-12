@@ -13,7 +13,6 @@ import {
   Paper,
   Toolbar,
 } from "@material-ui/core";
-// import { Signup, Login } from "./pages/";
 
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword.page"));
