@@ -2,14 +2,7 @@ import React, { useRef, useState } from "react";
 // import { Form, Button, Card, Alert } from 'react-bootstrap';
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  Card,
-  CardContent,
-  FormControl,
-  Input,
-  InputLabel,
-} from "@material-ui/core";
+import { Button, Card, CardContent, FormControl } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
 
 export default function ForgotPassword() {

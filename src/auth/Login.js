@@ -4,22 +4,9 @@ import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { styled } from "@material-ui/core/styles";
 import logo from "../components/images/logo.PNG";
-import {
-  Button,
-  Card,
-  CardContent,
-  FormControl,
-  FormHelperText,
-  Input,
-  InputLabel,
-  TextField,
-  makeStyles,
-  IconButton,
-  InputAdornment,
-} from "@material-ui/core";
+import { Button, Card, CardContent, FormControl } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
-import clsx from "clsx";
 import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
 
 const MyButton = styled(Button)({

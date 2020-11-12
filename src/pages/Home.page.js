@@ -16,11 +16,9 @@ import { useHistory } from "react-router-dom";
 export default function HomePage() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [customSearch, setCustomSearch] = useState(false);
   const history = useHistory();
 
   const fetchJobs = async () => {
-    setCustomSearch(false);
     setLoading(true);
     const req = await firestore
       .collection("jobs")

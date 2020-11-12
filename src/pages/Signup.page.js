@@ -1,6 +1,6 @@
 import React from "react";
 import Signup from "../auth/Signup";
-import { Container, Grid } from "@material-ui/core";
+import { Container } from "@material-ui/core";
 
 export default function SignupPage() {
   return (

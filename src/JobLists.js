@@ -1,6 +1,4 @@
 import React, { lazy, Suspense, useEffect, useState } from "react";
-import { useAuth } from "./contexts/AuthContext";
-import { useHistory } from "react-router-dom";
 import {
   Box,
   Button,
@@ -20,8 +18,6 @@ function JobLists(props) {
   const [customSearch, setCustomSearch] = useState(false);
   const [newJobModal, setNewJobModal] = useState(false);
   const [viewJob, setViewJob] = useState({});
-  const { currentUser } = useAuth();
-  const history = useHistory();
 
   const fetchJobs = async () => {
     setCustomSearch(false);

@@ -1,6 +1,5 @@
-import { Box, Button, Grid, makeStyles, Typography } from "@material-ui/core";
+import { Box, Button, Grid, makeStyles } from "@material-ui/core";
 import React from "react";
-import logo from "../images/logo.PNG";
 
 export default (props) => {
   const classes = useStyles();

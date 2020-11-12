@@ -1,13 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import {
-  Button,
-  Card,
-  FormControl,
-  CardContent,
-  makeStyles,
-} from "@material-ui/core";
+import { Button, Card, FormControl, CardContent } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import { AlertTitle } from "@material-ui/lab";
 
@@ -103,19 +97,3 @@ export default function Signup() {
     </div>
   );
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    flexWrap: "wrap",
-  },
-  margin: {
-    margin: theme.spacing(1),
-  },
-  withoutLabel: {
-    marginTop: theme.spacing(3),
-  },
-  textField: {
-    width: "25ch",
-  },
-}));
