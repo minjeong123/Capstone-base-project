@@ -88,22 +88,24 @@ function App(props) {
             </Button>
           </form>
         </Toolbar>
-        <Toolbar style={{ flexDirection: "row" }}>
-          <Suspense
-            fallback={
-              <div>
-                <CircularProgress />
-              </div>
-            }
-          >
-            <Paper style={{ width: "120px", marginRight: "10px" }}>
-              <UserIcon />
-            </Paper>
-            <Paper>
-              <Logout />
-            </Paper>
-          </Suspense>
-        </Toolbar>
+        {currentUser ? (
+          <Toolbar style={{ flexDirection: "row" }}>
+            <Suspense
+              fallback={
+                <div>
+                  <CircularProgress />
+                </div>
+              }
+            >
+              <Paper style={{ width: "120px", marginRight: "10px" }}>
+                <UserIcon />
+              </Paper>
+              <Paper>
+                <Logout />
+              </Paper>
+            </Suspense>
+          </Toolbar>
+        ) : null}
       </AppBar>
 
       <div>

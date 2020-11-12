@@ -3,6 +3,7 @@ import { firestore } from "../firebase/config";
 import JobCard from "../components/Job/JobCard";
 import {
   Box,
+  CircularProgress,
   Grid,
   IconButton,
   ThemeProvider,
@@ -40,32 +41,42 @@ export default function HomePage() {
 
   return (
     <ThemeProvider theme={theme} style={{ transition: ".3s" }}>
-      <Box mb={3} mt={20}>
+      {loading ? (
         <Grid container spacing={2} justify="center">
-          <IconButton
-            style={{ backgroundColor: "primary" }}
-            onClick={() => history.push("/login")}
-          >
-            <Typography>더보기</Typography>
-            <LaunchIcon />
-          </IconButton>
+          <Box display="flex" justifyContent="center">
+            <CircularProgress />
+          </Box>
         </Grid>
-      </Box>
-      <Box mb={3}>
-        <Grid container spacing={2} justify="center">
-          <Grid item xs={10}>
-            <Grid container>
-              {jobs.map((job) => (
-                <Grid item xs={4}>
-                  <Box display="flex" justifyContent="row-revers">
-                    <JobCard key={job.id} {...job} />
-                  </Box>
-                </Grid>
-              ))}
+      ) : (
+        <>
+          <Box mb={3} mt={20}>
+            <Grid container spacing={2} justify="center">
+              <IconButton
+                style={{ backgroundColor: "primary" }}
+                onClick={() => history.push("/login")}
+              >
+                <Typography>더보기</Typography>
+                <LaunchIcon />
+              </IconButton>
             </Grid>
-          </Grid>
-        </Grid>
-      </Box>
+          </Box>
+          <Box mb={3}>
+            <Grid container spacing={2} justify="center">
+              <Grid item xs={10}>
+                <Grid container>
+                  {jobs.map((job) => (
+                    <Grid item xs={4}>
+                      <Box display="flex" justifyContent="row-revers">
+                        <JobCard key={job.id} {...job} />
+                      </Box>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+            </Grid>
+          </Box>
+        </>
+      )}
     </ThemeProvider>
   );
 }
