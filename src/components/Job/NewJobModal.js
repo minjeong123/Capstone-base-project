@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Close as CloseIcon } from "@material-ui/icons";
-import uploadFilesIcon from "../images/uploadFilesIcon.png";
+import uploadFilesIcon from "../../assets/uploadFilesIcon.png";
 import React, { useRef, useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { firebase } from "../../firebase/config";

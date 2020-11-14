@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
 import { styled } from "@material-ui/core/styles";
-import logo from "../components/images/logo.PNG";
+import logo from "../assets/logo.PNG";
 import { Button, Card, CardContent, FormControl } from "@material-ui/core";
 import Alert from "@material-ui/lab/Alert";
 import AlertTitle from "@material-ui/lab/AlertTitle";
