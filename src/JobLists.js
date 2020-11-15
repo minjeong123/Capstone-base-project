@@ -19,6 +19,8 @@ function JobLists(props) {
   const [newJobModal, setNewJobModal] = useState(false);
   const [viewJob, setViewJob] = useState({});
 
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   const fetchJobs = async () => {
     setCustomSearch(false);
     setLoading(true);
@@ -40,11 +42,15 @@ function JobLists(props) {
     setCustomSearch(true);
     const req = await firestore
       .collection("jobs")
+      .orderBy("title", "asc")
       .orderBy("postedOn", "desc")
+
       .where("location", "==", jobSearch.location)
       .where("reward", "==", jobSearch.reward)
       .where("skills", "array-contains", jobSearch.skills)
       .where("sex", "==", jobSearch.sex)
+      .where("title", ">=", jobSearch.title)
+      .where("title", "<=", jobSearch.title + "\uf8ff")
       .get();
     const tempJobs = req.docs.map((job) => ({
       ...job.data(),
@@ -72,7 +78,7 @@ function JobLists(props) {
     fetchJobs();
   };
 
-  const updateJob = async (jobDetails) => {
+  const updateJob = async (jobDetails, imageUrl) => {
     await firestore
       .collection("jobs")
       .doc(jobDetails.postId)
@@ -80,6 +86,7 @@ function JobLists(props) {
         {
           ...jobDetails,
           postedOn: app.firestore.FieldValue.serverTimestamp(),
+          imageUrl: imageUrl,
         },
         { merge: true }
       );
@@ -105,6 +112,8 @@ function JobLists(props) {
   const ViewJobModal = lazy(() => import("./components/Job/ViewJobModal"));
   const JobCard = lazy(() => import("./components/Job/JobCard"));
 
+  console.log("searchKeyword", searchKeyword);
+
   return (
     <ThemeProvider theme={theme} style={{ transition: ".3s" }}>
       <Suspense
@@ -129,7 +138,10 @@ function JobLists(props) {
         <Box mb={3}>
           <Grid container spacing={2} justify="center">
             <Grid item xs={10}>
-              <SearchBar fetchJobsCustom={fetchJobsCustom} />
+              <SearchBar
+                fetchJobsCustom={fetchJobsCustom}
+                filterSelect={true}
+              />
               {loading ? (
                 <Box display="flex" justifyContent="center">
                   <CircularProgress />

@@ -12,10 +12,12 @@ import {
 import theme from "../theme/theme";
 import LaunchIcon from "@material-ui/icons/Launch";
 import { useHistory } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
 
 export default function HomePage() {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [customSearch, setCustomSearch] = useState(false);
   const history = useHistory();
 
   const fetchJobs = async () => {
@@ -23,6 +25,25 @@ export default function HomePage() {
     const req = await firestore
       .collection("jobs")
       .orderBy("postedOn", "desc")
+      .get();
+    const tempJobs = req.docs.map((job) => ({
+      ...job.data(),
+      id: job.id,
+      postedOn: job.data().postedOn.toDate(),
+    }));
+    setJobs(tempJobs);
+    setLoading(false);
+  };
+
+  const fetchJobsCustom = async (jobSearch) => {
+    setLoading(true);
+    setCustomSearch(true);
+    const req = await firestore
+      .collection("jobs")
+      .orderBy("title", "asc")
+      .orderBy("postedOn", "desc")
+      .where("title", ">=", jobSearch.title)
+      .where("title", "<=", jobSearch.title + "\uf8ff")
       .get();
     const tempJobs = req.docs.map((job) => ({
       ...job.data(),
@@ -48,6 +69,13 @@ export default function HomePage() {
       ) : (
         <>
           <Box mb={3} mt={20}>
+            <Grid container spacing={2} justify="center">
+              <SearchBar
+                fetchJobsCustom={fetchJobsCustom}
+                filterSelect={false}
+              />
+            </Grid>
+
             <Grid container spacing={2} justify="center">
               <IconButton
                 style={{ backgroundColor: "primary" }}

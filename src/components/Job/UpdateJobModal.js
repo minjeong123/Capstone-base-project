@@ -223,6 +223,7 @@ export default (props) => {
   };
 
   console.log("job", props.job);
+  console.log("CJD", currentJobDetails);
 
   return (
     <Dialog open={props.updateJobModal} fullWidth>

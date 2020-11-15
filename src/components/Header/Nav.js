@@ -57,7 +57,7 @@ export default function Nav() {
                 to={"/signup"}
                 style={{ textDecoration: "none", color: "black" }}
               >
-                Signup
+                회원가입
               </Link>
             </Button>
           )}
@@ -67,21 +67,27 @@ export default function Nav() {
                 to={"/login"}
                 style={{ textDecoration: "none", color: "black" }}
               >
-                login
+                로그인
               </Link>
             </Button>
           )}
         </Toolbar>
-        <Toolbar style={{ flexDirection: "row" }}>
+        {/* <Toolbar style={{ flexDirection: "row" }}>
           <form>
-            <input type="search" placeholder="Search" />
+            <input type="search" placeholder="Search 미구현" />
             <Button variant="contained" color="secondary" type="submit">
               Search
             </Button>
           </form>
-        </Toolbar>
+        </Toolbar> */}
         {currentUser ? (
-          <Toolbar style={{ flexDirection: "row" }}>
+          <Toolbar
+            style={{
+              marginRight: "auto",
+              flexDirection: "row",
+              marginLeft: "950px",
+            }}
+          >
             <Suspense
               fallback={
                 <div>

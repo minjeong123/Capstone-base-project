@@ -66,7 +66,7 @@ export default function Login() {
                 />
               </FormControl>
               <FormControl>
-                <label htmlFor="standard-adornment-password">Password</label>
+                <label htmlFor="standard-adornment-password">비밀번호</label>
                 <input
                   id="standard-adornment-password"
                   type="password"
