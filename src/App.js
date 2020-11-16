@@ -1,15 +1,8 @@
 import React, { Suspense, lazy } from "react";
-import { Link, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import PrivateRoute from "./auth/PrivateRoute";
-import {
-  AppBar,
-  Button,
-  CircularProgress,
-  IconButton,
-  Paper,
-  Toolbar,
-} from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import Nav from "./components/Header/Nav";
 
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
@@ -18,6 +11,7 @@ const JobListsPage = lazy(() => import("./JobLists"));
 const SignupPage = lazy(() => import("./pages/Signup.page"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
 const HomePage = lazy(() => import("./pages/Home.page"));
+const NoMatchPage = lazy(() => import("./pages/NoMatch.page"));
 
 function App(props) {
   const { currentUser } = useAuth();
@@ -42,26 +36,11 @@ function App(props) {
                 component={UpdateProfilePage}
               />
               <Route path="/signup" component={SignupPage} />
-              <Route
-                path="/login"
-                component={LoginPage}
-                style={{ flexDirection: "row" }}
-              />
-              <Route
-                path="/forgot-password"
-                component={ForgotPasswordPage}
-                style={{ flexDirection: "row" }}
-              />
-              <Route
-                path="/home"
-                component={HomePage}
-                style={{ flexDirection: "row" }}
-              />
-              <PrivateRoute
-                path="/talent"
-                component={JobListsPage}
-                style={{ flexDirection: "row" }}
-              />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/forgot-password" component={ForgotPasswordPage} />
+              <Route path="/home" component={HomePage} />
+              <PrivateRoute path="/talent" component={JobListsPage} />
+              <Route component={NoMatchPage} />
             </Switch>
           </Suspense>
         </AuthProvider>
