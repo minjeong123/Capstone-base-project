@@ -72,14 +72,6 @@ export default function Nav() {
             </Button>
           )}
         </Toolbar>
-        {/* <Toolbar style={{ flexDirection: "row" }}>
-          <form>
-            <input type="search" placeholder="Search 미구현" />
-            <Button variant="contained" color="secondary" type="submit">
-              Search
-            </Button>
-          </form>
-        </Toolbar> */}
         {currentUser ? (
           <Toolbar
             style={{
@@ -88,20 +80,12 @@ export default function Nav() {
               marginLeft: "950px",
             }}
           >
-            <Suspense
-              fallback={
-                <div>
-                  <CircularProgress />
-                </div>
-              }
-            >
-              <Paper style={{ width: "120px", marginRight: "10px" }}>
-                <UserIcon />
-              </Paper>
-              <Paper>
-                <Logout />
-              </Paper>
-            </Suspense>
+            <Paper style={{ width: "120px", marginRight: "10px" }}>
+              <UserIcon />
+            </Paper>
+            <Paper>
+              <Logout />
+            </Paper>
           </Toolbar>
         ) : null}
       </AppBar>

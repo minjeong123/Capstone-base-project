@@ -4,6 +4,7 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import PrivateRoute from "./auth/PrivateRoute";
 import { CircularProgress } from "@material-ui/core";
 import Nav from "./components/Header/Nav";
+import "./styles.css";
 
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword.page"));
@@ -12,23 +13,22 @@ const SignupPage = lazy(() => import("./pages/Signup.page"));
 const LoginPage = lazy(() => import("./pages/Login.page"));
 const HomePage = lazy(() => import("./pages/Home.page"));
 const NoMatchPage = lazy(() => import("./pages/NoMatch.page"));
+const Chatlist = lazy(() => import("./pages/Chatlist"));
+const Chat = lazy(() => import("./pages/Chat"));
 
 function App(props) {
-  const { currentUser } = useAuth();
-
   return (
     <div style={{ flex: 1, flexDirection: "flex-start" }}>
-      <Nav />
-
-      <div>
-        <AuthProvider>
-          <Suspense
-            fallback={
-              <div>
-                <CircularProgress />
-              </div>
-            }
-          >
+      <Suspense
+        fallback={
+          <div>
+            <CircularProgress />
+          </div>
+        }
+      >
+        <Nav />
+        <div>
+          <AuthProvider>
             <Switch>
               <PrivateRoute exact path="/" component={JobListsPage} />
               <PrivateRoute
@@ -40,11 +40,20 @@ function App(props) {
               <Route path="/forgot-password" component={ForgotPasswordPage} />
               <Route path="/home" component={HomePage} />
               <PrivateRoute path="/talent" component={JobListsPage} />
+
+              <PrivateRoute exact path="/chat" component={Chatlist} />
+              <PrivateRoute path="/chat/:chatID" component={Chat} />
+
+              <Route
+                exact path="/chat"
+                render={() => <Chatlist postId={props.job.userId} />}
+              />
+
               <Route component={NoMatchPage} />
             </Switch>
-          </Suspense>
-        </AuthProvider>
-      </div>
+          </AuthProvider>
+        </div>
+      </Suspense>
     </div>
   );
 }

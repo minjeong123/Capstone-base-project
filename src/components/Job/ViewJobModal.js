@@ -19,6 +19,7 @@ import {
 import * as dateFns from "date-fns";
 import { useAuth } from "../../contexts/AuthContext";
 import UpdateJobModal from "./UpdateJobModal";
+import { Link } from "react-router-dom";
 
 export default (props) => {
   const classes = useStyles();
@@ -165,14 +166,22 @@ export default (props) => {
               <CircularProgress color="secondary" size={22} />
             ) : (
               <>
-                <Grid>
-                  {" "}
-                  <Typography>쪽지 보내기</Typography>
-                </Grid>
-                <Grid>
-                  {" "}
-                  <MessageIcon />
-                </Grid>
+                {/* <Link to="/chat" className="btn btn-primary btn-lg m-2"> */}
+                <Link
+                  to={{
+                    pathname: "/chat",
+                    query: { userId: props.job.userId },
+                  }}
+                >
+                  <Grid>
+                    {" "}
+                    <Typography>쪽지 보내기</Typography>
+                  </Grid>
+                  <Grid>
+                    {" "}
+                    <MessageIcon />
+                  </Grid>
+                </Link>
               </>
             )}
           </Box>

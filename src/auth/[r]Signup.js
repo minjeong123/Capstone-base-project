@@ -2,13 +2,14 @@ import React, { useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { Button, Card, FormControl, CardContent } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
+import { AlertTitle } from "@material-ui/lab";
 
 export default function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const passwordConfirmRef = useRef();
-  const nameRef = useRef();
-  const { signup, updateDisplayName, addUserToDB } = useAuth();
+  const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -24,10 +25,7 @@ export default function Signup() {
       setLoading(true);
       console.log("em", emailRef.current.value);
       console.log("pw", passwordRef.current.value);
-      console.log("nm", nameRef.current.value);
       await signup(emailRef.current.value, passwordRef.current.value);
-      await updateDisplayName(nameRef.current.value);
-      await addUserToDB();
 
       history.push("/login");
     } catch {
@@ -37,10 +35,6 @@ export default function Signup() {
     setLoading(false);
   }
 
-  // console.log("em", emailRef.current.value);
-  // console.log("pw", passwordRef.current.value);
-  // console.log("naeme", nameRef.current.value);
-
   return (
     <div className="w-100" style={{ maxWidth: "400px" }}>
       <>
@@ -48,10 +42,10 @@ export default function Signup() {
           <CardContent>
             <h2 className="text-center mb-4">회원가입</h2>
             {error && (
-              <section>
-                <p>Error</p>
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
                 This is an error alert — <strong>{error}</strong>
-              </section>
+              </Alert>
             )}
             <form onSubmit={handleSubmit}>
               <FormControl>
@@ -83,17 +77,6 @@ export default function Signup() {
                   required
                 />
               </FormControl>
-
-              <FormControl>
-                <label htmlFor="standard-adornment-name">닉네임</label>
-                <input
-                  id="standard-adornment-name-confirm"
-                  type="text"
-                  ref={nameRef}
-                  required
-                />
-              </FormControl>
-
               <Button
                 disabled={loading}
                 variant="contained"

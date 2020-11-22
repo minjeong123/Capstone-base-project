@@ -2,9 +2,22 @@ import React, { useRef, useState } from "react";
 // import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../contexts/AuthContext";
 import { Link, useHistory } from "react-router-dom";
+import { styled } from "@material-ui/core/styles";
+import logo from "../assets/logo.PNG";
 import { Button, Card, CardContent, FormControl } from "@material-ui/core";
-// import Alert from "@material-ui/lab/Alert";
-// import AlertTitle from "@material-ui/lab/AlertTitle";
+import Alert from "@material-ui/lab/Alert";
+import AlertTitle from "@material-ui/lab/AlertTitle";
+import { AccountCircle, Visibility, VisibilityOff } from "@material-ui/icons";
+
+const MyButton = styled(Button)({
+  background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  border: 0,
+  borderRadius: 3,
+  boxShadow: "0 3px 5px 2px rgba(255, 105, 135, .3)",
+  color: "white",
+  height: 48,
+  padding: "0 30px",
+});
 
 export default function Login() {
   const emailRef = useRef();
@@ -21,7 +34,7 @@ export default function Login() {
       setError("");
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
+      history.push("/talent");
     } catch {
       setError("로그인에 실패했습니다.");
     }
@@ -33,11 +46,14 @@ export default function Login() {
       <>
         <Card>
           <CardContent style={{ flexDirection: "flex-start" }}>
+            <h2 className="text-center mb-4">
+              <img src={logo} width="185" height="185" alt="testA" style={{}} />
+            </h2>
             {error && (
-              <section>
-                <p>Error</p>
+              <Alert severity="error">
+                <AlertTitle>Error</AlertTitle>
                 This is an error alert — <strong>{error}</strong>
-              </section>
+              </Alert>
             )}
             <form onSubmit={handleSubmit}>
               <FormControl>
@@ -59,7 +75,7 @@ export default function Login() {
                 />
               </FormControl>
 
-              <button
+              <MyButton
                 disabled={loading}
                 variant="contained"
                 color="secondary"
@@ -67,7 +83,7 @@ export default function Login() {
                 type="submit"
               >
                 로그인
-              </button>
+              </MyButton>
             </form>
             <div className="w-100 text-center mt-3">
               <Link to="/forgot-password">비밀번호 재설정</Link>
