@@ -11,6 +11,8 @@ import Nav from "react-bootstrap/Nav";
 export default function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
+  const emailRef2 = useRef();
+  const passwordRef2 = useRef();
   const { login } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -38,20 +40,20 @@ export default function Login() {
   async function handleSubmit2(e) {
     e.preventDefault();
 
-    if (passwordRef.current.value !== passwordConfirmRef.current.value) {
+    if (passwordRef2.current.value !== passwordConfirmRef.current.value) {
       return setError("비밀번호가 일치하지 않습니다.");
     }
     try {
       setError("");
       setLoading(true);
-      console.log("em", emailRef.current.value);
-      console.log("pw", passwordRef.current.value);
+      console.log("em", emailRef2.current.value);
+      console.log("pw", passwordRef2.current.value);
       console.log("nm", nameRef.current.value);
-      await signup(emailRef.current.value, passwordRef.current.value);
+      await signup(emailRef2.current.value, passwordRef2.current.value);
       await updateDisplayName(nameRef.current.value);
       await addUserToDB();
 
-      history.push("/login");
+      history.push("/");
     } catch {
       setError("회원가입에 실패했습니다.");
     }
@@ -91,39 +93,27 @@ export default function Login() {
                       <div className="login-register-form">
                         <form onSubmit={handleSubmit}>
                           <input
-                            id="standard-adornment-email"
                             type="email"
+                            name="email"
                             placeholder="Email"
                             ref={emailRef}
                             required
                           />
                           <input
-                            id="standard-adornment-password"
                             type="password"
+                            name="user-password"
                             placeholder="Password"
                             ref={passwordRef}
                             required
                           />
-
                           <div className="button-box">
                             <div className="login-toggle-btn">
                               <input type="checkbox" />
                               <label className="ml-10">Remember me</label>
-                              <Link to="/forgot-password">
-                                Forgot Password?
-                              </Link>
+                              <Link to="/forgot-password">비밀번호 재설정</Link>
                             </div>
-                            {/* <button type="submit">
-                                  <span>Login</span>
-                                </button> */}
-                            <button
-                              disabled={loading}
-                              variant="contained"
-                              color="secondary"
-                              className="w-100"
-                              type="submit"
-                            >
-                              로그인
+                            <button type="submit">
+                              <span>Login</span>
                             </button>
                           </div>
                         </form>
@@ -145,7 +135,7 @@ export default function Login() {
                             id="standard-adornment-password"
                             type="password"
                             placeholder="Password"
-                            ref={passwordRef}
+                            ref={passwordRef2}
                             required
                           />
                           <input
@@ -159,17 +149,11 @@ export default function Login() {
                             id="standard-adornment-email"
                             type="email"
                             placeholder="Email"
-                            ref={emailRef}
+                            ref={emailRef2}
                             required
                           />
                           <div className="button-box">
-                            <button
-                              disabled={loading}
-                              variant="contained"
-                              color="secondary"
-                              className="w-50"
-                              type="submit"
-                            >
+                            <button type="submit">
                               <span>Register</span>
                             </button>
                           </div>
