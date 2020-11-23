@@ -9,8 +9,9 @@ import "./styles.css";
 const UpdateProfilePage = lazy(() => import("./pages/UpdateProfile.page"));
 const ForgotPasswordPage = lazy(() => import("./pages/ForgotPassword.page"));
 const JobListsPage = lazy(() => import("./JobLists"));
-const SignupPage = lazy(() => import("./pages/Signup.page"));
-const LoginPage = lazy(() => import("./pages/Login.page"));
+// const SignupPage = lazy(() => import("./pages/[r]Signup.page"));
+// const LoginPage = lazy(() => import("./pages/Login.page"));
+const LoginRegisterPage = lazy(() => import("./pages/LoginRegister"));
 const HomePage = lazy(() => import("./pages/Home.page"));
 const NoMatchPage = lazy(() => import("./pages/NoMatch.page"));
 const Chatlist = lazy(() => import("./pages/Chatlist"));
@@ -35,8 +36,7 @@ function App(props) {
                 path="/update-profile"
                 component={UpdateProfilePage}
               />
-              <Route path="/signup" component={SignupPage} />
-              <Route path="/login" component={LoginPage} />
+              <Route path="/login-register" component={LoginRegisterPage} />
               <Route path="/forgot-password" component={ForgotPasswordPage} />
               <Route path="/home" component={HomePage} />
               <PrivateRoute path="/talent" component={JobListsPage} />

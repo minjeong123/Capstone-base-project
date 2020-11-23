@@ -54,20 +54,10 @@ export default function Nav() {
           {currentUser ? null : (
             <Button variant="contained" style={{ marginRight: "5px" }}>
               <Link
-                to={"/signup"}
+                to={"/login-register"}
                 style={{ textDecoration: "none", color: "black" }}
               >
-                회원가입
-              </Link>
-            </Button>
-          )}
-          {currentUser ? null : (
-            <Button variant="contained" style={{ marginRight: "5px" }}>
-              <Link
-                to={"/login"}
-                style={{ textDecoration: "none", color: "black" }}
-              >
-                로그인
+                로그인/회원가입
               </Link>
             </Button>
           )}

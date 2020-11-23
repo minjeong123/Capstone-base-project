@@ -1,5 +1,5 @@
 Arguments: 
-  D:\nodejs\node.exe D:\Yarn\bin\yarn.js add @material-ui/lab
+  D:\nodejs\node.exe D:\Yarn\bin\yarn.js add node-sass
 
 PATH: 
   C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\PuTTY\;D:\ML\bin;C:\Users\user01\Anaconda3\Lib\site-packages\graphviz\bin;C:\Program Files\Java\jdk1.8.0_191\bin;C:\Program Files\MySQL\MySQL Server 8.0\bin;D:\Android\sdk\platform-tools;D:\nodejs\;D:\Yarn\bin\;D:\Anaconda3;D:\Anaconda3\Library\mingw-w64\bin;D:\Anaconda3\Library\usr\bin;D:\Anaconda3\Library\bin;D:\Anaconda3\Scripts;C:\Users\user01\AppData\Local\Programs\Python\Python38-32\Scripts\;C:\Users\user01\AppData\Local\Programs\Python\Python38-32\;C:\Program Files\MySQL\MySQL Shell 8.0\bin\;C:\Users\user01\AppData\Local\Programs\Python\Python37-32\Scripts\;C:\Users\user01\AppData\Local\Programs\Python\Python37-32\;C:\Users\user01\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Bandizip\;C:\Users\user01\AppData\Roaming\npm;C:\Users\user01\AppData\Local\Yarn\bin;D:\Microsoft VS Code\bin;C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Node.js
@@ -14,7 +14,16 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: ENOENT: no such file or directory, scandir 'D:\react-exercise\jobListing\job-listing-react\node_modules\babel-runtime\node_modules\core-js'
+  Error: https://registry.yarnpkg.com/@material-ui/icons/-/icons-4.9.1.tgz: ESOCKETTIMEDOUT
+      at ClientRequest.<anonymous> (D:\Yarn\lib\cli.js:141376:19)
+      at Object.onceWrapper (events.js:421:28)
+      at ClientRequest.emit (events.js:315:20)
+      at TLSSocket.emitRequestTimeout (_http_client.js:709:9)
+      at Object.onceWrapper (events.js:421:28)
+      at TLSSocket.emit (events.js:327:22)
+      at TLSSocket.Socket._onTimeout (net.js:482:8)
+      at listOnTimeout (internal/timers.js:549:17)
+      at processTimers (internal/timers.js:492:7)
 
 npm manifest: 
   {
@@ -22,24 +31,33 @@ npm manifest:
     "version": "0.1.0",
     "private": true,
     "dependencies": {
+      "@loadable/component": "^5.14.1",
       "@material-ui/core": "^4.11.0",
       "@material-ui/icons": "^4.9.1",
+      "@material-ui/lab": "^4.0.0-alpha.56",
       "@testing-library/jest-dom": "^4.2.4",
       "@testing-library/react": "^9.3.2",
       "@testing-library/user-event": "^7.1.2",
+      "bootstrap": "^4.5.3",
       "date-fns": "^2.16.1",
       "firebase": "^7.24.0",
       "firebase-admin": "^9.3.0",
       "react": "^16.13.1",
+      "react-bootstrap": "^1.4.0",
+      "react-breadcrumbs-dynamic": "^1.2.1",
       "react-dom": "^16.13.1",
       "react-loadable": "^5.5.0",
-      "react-scripts": "3.4.3"
+      "react-router-dom": "^5.2.0",
+      "react-scripts": "3.4.3",
+      "react-through": "^1.1.4",
+      "react-toast-notifications": "^2.4.0"
     },
     "scripts": {
       "start": "react-scripts start",
       "build": "react-scripts build",
       "test": "react-scripts test",
-      "eject": "react-scripts eject"
+      "eject": "react-scripts eject",
+      "lint": "eslint ."
     },
     "eslintConfig": {
       "extends": "react-app"
@@ -55,6 +73,11 @@ npm manifest:
         "last 1 firefox version",
         "last 1 safari version"
       ]
+    },
+    "devDependencies": {
+      "eslint-config-airbnb": "^18.2.1",
+      "eslint-config-prettier": "^6.15.0",
+      "eslint-plugin-prettier": "^3.1.4"
     }
   }
 
