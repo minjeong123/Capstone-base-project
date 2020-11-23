@@ -44,11 +44,6 @@ function App(props) {
               <PrivateRoute exact path="/chat" component={Chatlist} />
               <PrivateRoute path="/chat/:chatID" component={Chat} />
 
-              <Route
-                exact path="/chat"
-                render={() => <Chatlist postId={props.job.userId} />}
-              />
-
               <Route component={NoMatchPage} />
             </Switch>
           </AuthProvider>

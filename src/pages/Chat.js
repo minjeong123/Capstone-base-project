@@ -122,7 +122,15 @@ export default function Chat(props) {
       {loadingChats ? <div className="spinner"></div> : ""}
       <section className="chat-container">
         <header className="chat-header">
-          <Link to="/chat" className="px-2">
+          {/* <Link to="/chat" className="px-2"> */}
+          <Link
+            to={{
+              pathname: "/chat",
+              // query: {
+              //   userId: props.job.userId,
+              // },
+            }}
+          >
             <i className="fas fa-chevron-left" style={{ fontWeight: 800 }}>
               &lt;&lt;
             </i>

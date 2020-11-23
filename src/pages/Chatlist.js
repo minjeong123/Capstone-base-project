@@ -12,6 +12,7 @@ export default function Chatlist(props) {
   const [error, setError] = useState(null);
   const [friendsList, setFriendsList] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState("");
 
   async function getB() {
     // this.setState({ error: null, loading: true });
@@ -156,8 +157,9 @@ export default function Chatlist(props) {
             <Link to="/">Chatalone</Link>
           </div>
           <div className="chat-settings">
-            <Link onClick={() => logout()} to="/" className="px-2">
-              <i className="fas fa-sign-out-alt">Log Out</i>
+            {/* <Link onClick={() => logout()} to="/" className="px-2"> */}
+            <Link to="/" className="px-2">
+              <i className="fas fa-sign-out-alt">나가기</i>
             </Link>
           </div>
         </header>
@@ -177,7 +179,7 @@ export default function Chatlist(props) {
             name="inputVal"
             onChange={handleChange}
             className="chat-input"
-            defaultValue={location.query.userId}
+            defaultValue={userId}
           ></input>
           <button type="submit" className="chat-sendbtn">
             Chat

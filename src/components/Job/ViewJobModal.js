@@ -170,7 +170,9 @@ export default (props) => {
                 <Link
                   to={{
                     pathname: "/chat",
-                    query: { userId: props.job.userId },
+                    query: {
+                      userId: props.job.userId ? props.job.userId : null,
+                    },
                   }}
                 >
                   <Grid>
