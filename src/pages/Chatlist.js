@@ -51,6 +51,10 @@ export default function Chatlist(props) {
 
   useEffect(() => {
     getB();
+    if (location.query === undefined || location.query === null) {
+    } else {
+      setInputVal(location.query.userId);
+    }
   }, []);
 
   const handleChange = (event) => {
@@ -179,7 +183,7 @@ export default function Chatlist(props) {
             name="inputVal"
             onChange={handleChange}
             className="chat-input"
-            defaultValue={userId}
+            defaultValue={inputVal}
           ></input>
           <button type="submit" className="chat-sendbtn">
             Chat
