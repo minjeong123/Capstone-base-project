@@ -13,7 +13,7 @@ export default function Logout() {
 
     try {
       await logout();
-      history.push("/login");
+      history.push("/login-register");
     } catch {
       setError("로그아웃에 실패했습니다.");
     }
